@@ -72,17 +72,21 @@ class ParticleSystem {
     Particle[] particles;
     Particle[] particlesS;
     
-     //make the maxParticlesLeft, because there are technically 2 particle systems they should be half 5000 so 2500 each but I just have them at 1000 cause whatever. 
+     //max particles need to be high in order to account for the three seperate particle sections
+     //also need to be high enough to display all letters in the particle text
     final static int maxParticlesleft = 5000;
     final static int maxParticlesleftS = 5000;
     final static int maxParticlesmid = 5000;
     final static int maxParticlesmidS = 5000;
+    
     //create another Index counter
     int curIndexleft;
     int curIndexleftS;
     int curIndexmid;
     int curIndexmidS;
-    //create another aprticle array
+    
+    //create another aprticle array for the sperate sections of the screen
+    //this is to render different particle colors in each section
     Particle[] particlesleft;
     Particle[] particlesleftS;
     Particle[] particlesmid;
@@ -165,7 +169,7 @@ class ParticleSystem {
         } 
         else {
 
-
+            //adding/updating/drawing for the new particle array for the right section of the screen
             gl.glBegin(gl.GL_LINES);               // start drawing points
             for(int i=0; i<maxParticles; i++) {
                 if(particles[i].alpha > 0) {
@@ -173,7 +177,7 @@ class ParticleSystem {
                     particles[i].drawOldSchool(gl);    // use oldschool renderng
                 }
             }
-            
+            //change color (drawOldSchoolS) and momentum (update2) when speed of blob reaches threshold
             for(int i=0; i<maxParticlesS; i++) {
                 if(particlesS[i].alpha > 0) {
                     particlesS[i].update2();
@@ -181,7 +185,7 @@ class ParticleSystem {
                 }
             }
             
-        //Add this whole method, basically just adding/updating/drawing for the new, second particle array
+        //Add this whole method, adding/updating/drawing for the new particle array for the left section of the screen
         for(int i=0; i<maxParticlesleft; i++) {
             if(particlesleft[i].alpha > 0) {
                 particlesleft[i].update();
@@ -189,7 +193,8 @@ class ParticleSystem {
             }
         }
         
-         //Add this whole method, basically just adding/updating/drawing for the new, second particle array
+         //adding/updating/drawing for the new particle array for the left section of the screen
+         //change color (drawOldSchoolleftS) and momentum (update2) when speed of blob reaches threshold
         for(int i=0; i<maxParticlesleftS; i++) {
             if(particlesleftS[i].alpha > 0) {
                 particlesleftS[i].update2();
@@ -197,13 +202,16 @@ class ParticleSystem {
             }
         }
         
+        //Add this whole method, adding/updating/drawing for the new particle array for the middle section of the screen
         for(int i=0; i<maxParticlesmid; i++) {
             if(particlesmid[i].alpha > 0) {
                 particlesmid[i].update();
                 particlesmid[i].drawOldSchoolmid(gl); //dont forget to make this new method in Particle
             }
         }
-        
+       
+       //adding/updating/drawing for the new particle array for the middle section of the screen
+       //change color (drawOldSchoolmidS) and momentum (update2) when speed of blob reaches threshold
        for(int i=0; i<maxParticlesmidS; i++) {
             if(particlesmidS[i].alpha > 0) {
                 particlesmidS[i].update2();
@@ -218,6 +226,8 @@ class ParticleSystem {
   }
     }
     
+    //secondary update and draw to be used for when speed of blob reaches threshold 
+    //increases momentum of particle and changes colors
      void updateAndDraw2(){
         //OPENGL Processing 2.1
         PGL pgl;                                  // JOGL's GL object
@@ -253,7 +263,7 @@ class ParticleSystem {
             gl.glDrawArrays(GL2.GL_LINES, 0, maxParticles * 2);
         } 
         else {
-  
+             //adding/updating/drawing for the new particle array for the right section of the screen
             gl.glBegin(gl.GL_LINES);               // start drawing points
             for(int i=0; i<maxParticles; i++) {
                 if(particles[i].alpha > 0) {
@@ -262,6 +272,7 @@ class ParticleSystem {
                 }
             }
             
+            //change color (drawOldSchoolS) and momentum (update2) when speed of blob reaches threshold
             for(int i=0; i<maxParticlesS; i++) {
                 if(particlesS[i].alpha > 0) {
                     particlesS[i].update2();
@@ -269,7 +280,7 @@ class ParticleSystem {
                 }
             }
             
-        //Add this whole method, basically just adding/updating/drawing for the new, second particle array
+         //Add this whole method, adding/updating/drawing for the new particle array for the left section of the screen
         for(int i=0; i<maxParticlesleft; i++) {
             if(particlesleft[i].alpha > 0) {
                 particlesleft[i].update2();
@@ -278,7 +289,8 @@ class ParticleSystem {
             }
         }
         
-         //Add this whole method, basically just adding/updating/drawing for the new, second particle array
+          //adding/updating/drawing for the new particle array for the left section of the screen
+         //change color (drawOldSchoolleftS) and momentum (update2) when speed of blob reaches threshold
         for(int i=0; i<maxParticlesleftS; i++) {
             if(particlesleftS[i].alpha > 0) {
                 particlesleftS[i].update2();
@@ -286,6 +298,7 @@ class ParticleSystem {
             }
         }
         
+        //Add this whole method, adding/updating/drawing for the new particle array for the middle section of the screen
         for(int i=0; i<maxParticlesmid; i++) {
             if(particlesmid[i].alpha > 0) {
                 particlesmid[i].update2();
@@ -293,6 +306,8 @@ class ParticleSystem {
             }
         }
         
+        //adding/updating/drawing for the new particle array for the middle section of the screen
+       //change color (drawOldSchoolmidS) and momentum (update2) when speed of blob reaches threshold
         for(int i=0; i<maxParticlesmidS; i++) {
             if(particlesmidS[i].alpha > 0) {
                 particlesmidS[i].update2();
@@ -311,6 +326,8 @@ class ParticleSystem {
    void addParticles(float x, float y, int count ){
         for(int i=0; i< count; i++) {
           
+         //seperating adding particles into the three sections of the screen
+         
          if(x <= (width*1/3)){   
                      
            if(averageSpeed > 12){
@@ -346,6 +363,8 @@ class ParticleSystem {
         if(curIndex >= maxParticles) curIndex = 0;
     }
     
+        //add particles for when speed reaches threshold
+        //for right section
         void addParticleS(float x, float y) {
         particlesS[curIndexS].init(x, y);
         curIndexS++;
@@ -358,6 +377,8 @@ class ParticleSystem {
         if(curIndexleft >= maxParticlesleft) curIndexleft = 0;
     }
     
+         //add particles for when speed reaches threshold
+        //for left section
          void addParticleleftS(float x, float y) {
         particlesleftS[curIndexleftS].init(x, y);
         curIndexleftS++;
@@ -370,6 +391,8 @@ class ParticleSystem {
         if(curIndexmid >= maxParticlesmid) curIndexmid = 0;
     }
     
+         //add particles for when speed reaches threshold
+        //for middle section
              void addParticlemidS(float x, float y) {
         particlesmidS[curIndexmidS].init(x, y);
         curIndexmidS++;

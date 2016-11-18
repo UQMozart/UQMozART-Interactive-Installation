@@ -148,17 +148,21 @@ void draw() {
     updateTUIO();
     fluidSolver.update();
    
-
+    
     if (drawFluid3 == 0) {
       particleSystem.updateAndDraw();
     } 
+    //when average speed of blob is above variable (12) momentum and color update
    else if (drawFluid3 == 1){
     particleSystem.updateAndDraw2();
     
    }
+   //if alive time for blob crosses above a variable (30) switch to particle system that does not fade (until blob is removed or another added)
    else if (drawFluid3 == 2){
    particleSystem.updateAndDraw();
      }
+     
+   //if no interaction detected for 10 seconds create the particle text
     if(millis() - lastTimeMovementDetected > 10000){ //1000 = 1 second, 10000=10 seconds
     fluidSolver.reset();
     textWrite(sw, sh);   
@@ -178,6 +182,7 @@ void oscEvent(OscMessage theOscMessage) {
           averageDepth = theOscMessage.get(2).floatValue();
         }
     }
+    //whenever OSC message is sent, check for thresholds (for visual changes)
       if (averageSpeed >= 12) {
       drawFluid3 = 1;    
     }
@@ -239,19 +244,6 @@ void uploadPicture(File file, String message, Twitter twitter)  {
 // add force and dye to fluid, and create particles
 void addForce(float x, float y, float dx, float dy) {
     float speed = dx * dx  + dy * dy * aspectRatio2;    // balance the x and y components of speed with the screen aspect ratio
-
-//     if (x * width <= (displayWidth*1/3)){
-//          drawFluid3 = 0;
-//           
-//          }
-//          else if (x * width > (displayWidth*(1/3)) && x * width <= (displayWidth*2/3)) {
-//          drawFluid3 = 0;       
-// 
-//          }
-//          else if (x * width > (displayWidth*2/3) && x * width <= displayWidth){
-//          drawFluid3 = 2;
-//            
-//          }
 
     
     if(speed > 0) {
