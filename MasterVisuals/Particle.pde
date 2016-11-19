@@ -90,6 +90,8 @@ class Particle {
         if(alpha < 0.1) alpha = 0;
     }
     
+    //secondary update for when average speed of blob passes threshold variable
+    //increased momentum of particles
         void update2() {
         // only update if particle is visible
         if(alpha == 0) return;
@@ -136,26 +138,7 @@ class Particle {
 
   //Blue
    void updateVertexArrays(int i, FloatBuffer posBuffer, FloatBuffer colBuffer) {
-        
-//  if (x <= (displayWidth*1/3)){
-//      if (averageSpeed >= 16) {
-//        
-//        int vi = i * 4;
-//        posBuffer.put(vi++, x - vx);
-//        posBuffer.put(vi++, y - vy);
-//        posBuffer.put(vi++, x);
-//        posBuffer.put(vi++, y);
-//
-//        int ci = i * 6;
-//        colBuffer.put(ci++, 0.1);
-//        colBuffer.put(ci++, 0);
-//        colBuffer.put(ci++, 1);
-//        colBuffer.put(ci++, 0.5);
-//        colBuffer.put(ci++, 0);
-//        colBuffer.put(ci++, alpha); 
-//      }
-//      else {
-        
+          
         
         int vi = i * 4;
         posBuffer.put(vi++, x - vx);
@@ -171,26 +154,6 @@ class Particle {
         colBuffer.put(ci++, 0.5);
         colBuffer.put(ci++, alpha);
         colBuffer.put(ci++, 1);
-        
-//      }
-           
-//}
-//          else  {
-//        int vi = i * 4;
-//        posBuffer.put(vi++, x - vx);
-//        posBuffer.put(vi++, y - vy);
-//        posBuffer.put(vi++, x);
-//        posBuffer.put(vi++, y);
-//
-//        int ci = i * 6;
-//        colBuffer.put(ci++, 1);
-//        colBuffer.put(ci++, alpha);
-//        colBuffer.put(ci++, 1);
-//        colBuffer.put(ci++, 0.25);
-//        colBuffer.put(ci++, alpha);
-//        colBuffer.put(ci++, 1);
-// 
-//          }
      
      
 
@@ -364,21 +327,29 @@ class Particle {
          
          
        }
+       
+//Main functions for altering color of particles 
+//adding new drawOldSchool methods to swtich between
 
+//right section of the screen
 void drawOldSchool(GL2 gl) {
       
-
+        //the result is red
         gl.glColor3f(1, 0.1, 0);
+        
         //1, 0.5, 0.1 gold
           
         gl.glVertex2f(x-vx, y-vy);
         gl.glVertex2f(x, y);
     } 
     
+//right sectio of the screen
+//when speed of blob reaches threshold
 void drawOldSchoolS(GL2 gl) {
       
-
+        //the result is gold
         gl.glColor3f(1, 0.5, 0);
+        
         //red 1, 0.1, 0
         //1, 0.5, 0.1 gold 1, 0.7, 0
           
@@ -387,9 +358,12 @@ void drawOldSchoolS(GL2 gl) {
     } 
     
     
-    //this method needs to be created/added (its called from ParticleSystem)
+    //this method needs to be created/added (its called from ParticleSystem) for seperate color particles in the left section
     void drawOldSchoolleft(GL2 gl) {
+      
+      //the result is purple
         gl.glColor3f(0.3, 0.1, 1);
+        
         //0.5, 0.3, 1 purple thisone 0.3, 0.1, 1
         // 0, 1, 1 cyan 0, 0.5, 0.5
         // 0, 1, 0.5 green 0, 1, 0.1
@@ -401,7 +375,11 @@ void drawOldSchoolS(GL2 gl) {
         gl.glVertex2f(x, y);
     }
     
+    //left section of the screen
+    //when speed of blob reaches threshold
         void drawOldSchoolleftS(GL2 gl) {
+          
+        //the result is light purple
         gl.glColor3f(0.5, 0.3, 0.7);
         //old 0, 1, 0.5
         // 0, 1, 1 cyan 0, 0.5, 0.5
@@ -414,18 +392,24 @@ void drawOldSchoolS(GL2 gl) {
         gl.glVertex2f(x, y);
     }
 
-    
+      //this method needs to be created/added (its called from ParticleSystem) for seperate color particles in the middle section
     void drawOldSchoolmid(GL2 gl) {
+      
+        //the result is blue
         gl.glColor3f(0, 0.25, 1);
-        //1, 0.1, 0 red
+       
           
         gl.glVertex2f(x-vx, y-vy);
         gl.glVertex2f(x, y);
     }
     
+    //middle section of the screen
+    //when speed of blob reaches threshold
         void drawOldSchoolmidS(GL2 gl) {
+          
+        //the resul is cyan
         gl.glColor3f(0, 0.5, 0.5);
-        //1, 0.1, 0 red
+        
           
         gl.glVertex2f(x-vx, y-vy);
         gl.glVertex2f(x, y);
